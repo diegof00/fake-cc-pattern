@@ -2,24 +2,25 @@ package com.ecorp.fakecreditcardpatterndetector.calculator;
 
 import com.ecorp.fakecreditcardpatterndetector.domain.FakeCreditCardAmount;
 import com.ecorp.fakecreditcardpatterndetector.domain.FakeCreditCardPatternService;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 
 @Service
-@Slf4j
 public class FakeCreditCardCalculator implements FakeCreditCardPatternService {
 
+    private static final Logger log = LoggerFactory.getLogger(FakeCreditCardCalculator.class);
 
     public static final String INVALID_DAY_NUMBER = "Invalid dayNumber";
 
     @Override
     public FakeCreditCardAmount getFakeCreditCardsAmount(Integer dayNumber) {
-        if(dayNumber>0 && dayNumber<31) {
+        if(dayNumber>0 && dayNumber<=31) {
             return this.calculateFakeCreditCards(dayNumber);
         }else {
-            log.info("invalida day number {}", dayNumber);
+            log.info("invalid day number {}", dayNumber);
             throw new IllegalArgumentException(INVALID_DAY_NUMBER);
         }
     }
